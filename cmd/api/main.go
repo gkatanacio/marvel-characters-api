@@ -20,7 +20,7 @@ func main() {
 	log.Println("prepopulating cache")
 	if err := service.ReloadCache(); err != nil {
 		log.Println(err)
-		panic("failed to load cache")
+		panic("failed to populate cache")
 	}
 
 	getAllCharactersHandler := handlers.NewGetAllCharactersHandler(service)
