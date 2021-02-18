@@ -118,7 +118,7 @@ func (c *Client) GetCharacter(id int) (*MarvelApiCharacterData, error) {
 		return nil, err
 	}
 
-	// safe to assume Results[0] has value because empty Results result in 404 error in httpGet()
+	// safe to assume Results[0] has value because no Results will throw 404 error in httpGet()
 	return resultToMarvelApiCharacterData(marvelApiResp.Data.Results[0])
 }
 
