@@ -11,7 +11,7 @@ type Config struct {
 }
 
 func NewConfig() *Config {
-	c := &Config{}
+	c := new(Config)
 	envconfig.MustProcess("", c)
 	c.validate()
 	return c
