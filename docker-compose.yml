@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  golang:
+    image: golang:1.15-alpine
+    volumes:
+      - .:/code:cached
+    working_dir: /code
+    env_file: .env
+    environment:
+      - GOPATH=/code/.go
+
+  mockery:
+    image: vektra/mockery:v2.5
+    volumes:
+      - .:/code:cached
+    working_dir: /code
