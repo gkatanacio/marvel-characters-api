@@ -25,3 +25,7 @@ fmt: .env
 .PHONY: genMocks
 genMocks: .env
 	docker-compose run --rm mockery --all
+
+.PHONY: genSwagger
+genSwagger: .env
+	docker-compose run --rm -e GOOS=linux golang sh scripts/gen-swagger.sh

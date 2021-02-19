@@ -1,0 +1,54 @@
+definitions:
+  marvel.Character:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This API serves as a gateway to fetch character data from Marvel's
+    API.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Marvel Characters API
+  version: "1.0"
+paths:
+  /characters:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: integer
+            type: array
+      summary: Get all Character IDs
+      tags:
+      - Characters
+  /characters/{id}:
+    get:
+      parameters:
+      - description: Character ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/marvel.Character'
+      summary: Get Character information
+      tags:
+      - Characters
+swagger: "2.0"

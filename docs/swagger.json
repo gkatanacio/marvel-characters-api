@@ -1,0 +1,82 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This API serves as a gateway to fetch character data from Marvel's API.",
+        "title": "Marvel Characters API",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "paths": {
+        "/characters": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Characters"
+                ],
+                "summary": "Get all Character IDs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/characters/{id}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Characters"
+                ],
+                "summary": "Get Character information",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Character ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/marvel.Character"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "marvel.Character": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

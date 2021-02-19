@@ -9,6 +9,12 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// @title Marvel Characters API
+// @version 1.0
+// @description This API serves as a gateway to fetch character data from Marvel's API.
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:8080
 func main() {
 	log.Println("server startup")
 
