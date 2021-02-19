@@ -7,7 +7,7 @@ deps: .env
 
 .PHONY: test
 test: .env
-	docker-compose run --rm golang go test -v ./...
+	docker-compose run --rm -e GOOS=linux golang go test -v ./...
 
 .PHONY: build
 build: .env

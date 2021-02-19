@@ -9,6 +9,7 @@ services:
     env_file: .env
     environment:
       - GOPATH=/code/.go
+      - CGO_ENABLED=0
 
   mockery:
     image: vektra/mockery:v2.5
