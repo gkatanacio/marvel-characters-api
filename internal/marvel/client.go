@@ -154,7 +154,7 @@ func (c *Client) httpGet(path string, additionalQueryParams map[string]string) (
 		if err := json.Unmarshal(respBody, &errResp); err != nil {
 			return nil, err
 		}
-		log.Printf("error from marvel api: [%d] %s", resp.StatusCode, errResp.Message)
+		log.Printf(`error from marvel api: [%d] {status: "%s", message: "%s"}`, resp.StatusCode, errResp.Status, errResp.Message)
 
 		if resp.StatusCode == http.StatusNotFound {
 			return nil, errs.NewNotFound("no results")

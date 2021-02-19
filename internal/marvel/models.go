@@ -15,6 +15,7 @@ type MarvelApiResponse struct {
 }
 
 type MarvelApiErrResponse struct {
+	Status  string `json:"status"`
 	Message string `json:"message"`
 }
 
