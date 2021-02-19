@@ -23,11 +23,12 @@ func main() {
 	cache := marvel.NewInMemCache()
 	service := marvel.NewService(client, cache)
 
-	// just comment this part if lazy loading is preferred
-	log.Println("prepopulating cache")
-	if err := service.ReloadCache(); err != nil {
-		log.Println(err)
-		panic("failed to populate cache")
+	if cfg.EagerLoadCache {
+		log.Println("prepopulating cache")
+		if err := service.ReloadCache(); err != nil {
+			log.Println(err)
+			panic("failed to populate cache")
+		}
 	}
 
 	getAllCharactersHandler := handlers.NewGetAllCharactersHandler(service)

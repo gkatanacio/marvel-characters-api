@@ -8,6 +8,8 @@ type Config struct {
 	ApiBaseUrl    string `envconfig:"MARVEL_API_BASE_URL"`
 	ApiKeyPublic  string `envconfig:"MARVEL_API_KEY_PUBLIC"`
 	ApiKeyPrivate string `envconfig:"MARVEL_API_KEY_PRIVATE"`
+
+	EagerLoadCache bool `envconfig:"EAGER_LOAD_CACHE"`
 }
 
 func NewConfig() *Config {
