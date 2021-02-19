@@ -2,7 +2,7 @@ package marvel
 
 import "sync"
 
-type Cacher interface {
+type Cache interface {
 	SetCharacterIds(charIds IntSet)
 	GetCharacterIds() IntSet
 }

@@ -12,11 +12,11 @@ type Servicer interface {
 
 type Service struct {
 	client         MarvelDataFetcher
-	cache          Cacher
+	cache          Cache
 	latestModified *time.Time
 }
 
-func NewService(client MarvelDataFetcher, cache Cacher) *Service {
+func NewService(client MarvelDataFetcher, cache Cache) *Service {
 	return &Service{
 		client: client,
 		cache:  cache,
