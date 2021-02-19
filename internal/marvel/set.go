@@ -4,6 +4,8 @@ type void struct{}
 
 var member void
 
+// IntSet is an implementation of an integer set (collection of distinct integers),
+// since there is no native implementation available in golang.
 type IntSet struct {
 	elems map[int]void
 }

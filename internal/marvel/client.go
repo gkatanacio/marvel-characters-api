@@ -15,11 +15,14 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
+// MarvelDataFetcher is the interface to abstract the actual
+// calls to Marvel's API.
 type MarvelDataFetcher interface {
 	GetAllCharacters(from *time.Time) ([]*MarvelApiCharacterData, error)
 	GetCharacter(id int) (*MarvelApiCharacterData, error)
 }
 
+// Client is the concrete implementation of MarvelDataFetcher.
 type Client struct {
 	cfg        *Config
 	httpClient *http.Client
@@ -34,6 +37,10 @@ func NewClient(cfg *Config) *Client {
 	}
 }
 
+// GetAllCharacters fetches all characters modified since the optionally
+// provided `from` timestamp. If `from` is nil, GetAllCharacters fetches all
+// the Marvel characters. The MarvelApiCharacterData with the most recent
+// MarvelApiCharacterData.Modified is set as the first element in the returned slice.
 func (c *Client) GetAllCharacters(from *time.Time) ([]*MarvelApiCharacterData, error) {
 	var characters []*MarvelApiCharacterData
 
@@ -60,7 +67,7 @@ func (c *Client) GetAllCharacters(from *time.Time) ([]*MarvelApiCharacterData, e
 		characters = append(characters, char)
 	}
 
-	// fetch remaining characters if needed
+	// fetch remaining characters (asynchronously) if needed
 	if marvelApiResp.Data.Total > batchSize {
 		eg := new(errgroup.Group)
 		remainingChars := make(chan *MarvelApiCharacterData)
@@ -108,6 +115,7 @@ func (c *Client) GetAllCharacters(from *time.Time) ([]*MarvelApiCharacterData, e
 	return characters, nil
 }
 
+// GetCharacter fetches the character's data, given a character ID.
 func (c *Client) GetCharacter(id int) (*MarvelApiCharacterData, error) {
 	qp := map[string]string{
 		"limit": "1",

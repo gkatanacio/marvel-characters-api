@@ -5,6 +5,7 @@ import (
 	"net/http"
 )
 
+// HttpError is the interface for adding a StatusCode on top of an error.
 type HttpError interface {
 	Error() string
 	StatusCode() int
