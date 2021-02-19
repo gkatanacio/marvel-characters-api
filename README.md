@@ -22,14 +22,14 @@ $ make .env
 
 * see generated `.env` file for configuration
 
-#### run unit tests
-```bash
-$ make test
-```
-
 #### tidy dependencies
 ```bash
 $ make deps
+```
+
+#### run unit tests
+```bash
+$ make test
 ```
 
 #### build binary (target execution environment can be specified using `GOOS` in `.env`)
