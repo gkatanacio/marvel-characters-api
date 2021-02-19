@@ -33,7 +33,7 @@ func (s *Service) GetAllCharacterIds() ([]int, error) {
 
 	if len(characters) > 0 {
 		// s.client.GetAllCharacters() already returns the latest modified character as the first element
-		// if we really want to be safe, we can implement a simple logic here to get the most recent `Modified`
+		// if we really want to be safe, we can add a simple logic here to get the most recent `Modified`
 		latestModified, err := time.Parse(dateFormatMarvelApi, characters[0].Modified)
 		if err != nil {
 			return nil, err
@@ -74,7 +74,7 @@ func (s *Service) ReloadCache() error {
 	}
 
 	// s.client.GetAllCharacters() already returns the latest modified character as the first element
-	// if we really want to be safe, we can implement a simple logic here to get the most recent `Modified`
+	// if we really want to be safe, we can add a simple logic here to get the most recent `Modified`
 	latestModified, err := time.Parse(dateFormatMarvelApi, characters[0].Modified)
 	if err != nil {
 		return err
