@@ -9,7 +9,7 @@ Inspired by [3 Musketeers](https://3musketeers.io/), this project uses the follo
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Make](https://www.gnu.org/software/make/)
 
-There is a make target (`make build`) to build a binary which can be targeted for a particular execution environment. Environment variables are used for configuration.
+There is a make target (`make build`) to build a binary which can be targeted for a particular execution environment. Environment variables are used for app configuration.
 
 Go to [Quick Start](#quick-start)!
 
