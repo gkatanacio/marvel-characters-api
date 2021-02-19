@@ -11,7 +11,7 @@ definitions:
 host: localhost:8080
 info:
   contact: {}
-  description: This API serves as a gateway to fetch character data from Marvel's
+  description: This API serves as a gateway for fetching character data from Marvel's
     API.
   license:
     name: Apache 2.0

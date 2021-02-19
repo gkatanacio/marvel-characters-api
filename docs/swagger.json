@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This API serves as a gateway to fetch character data from Marvel's API.",
+        "description": "This API serves as a gateway for fetching character data from Marvel's API.",
         "title": "Marvel Characters API",
         "contact": {},
         "license": {

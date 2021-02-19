@@ -113,7 +113,7 @@ var SwaggerInfo = swaggerInfo{
 	BasePath:    "",
 	Schemes:     []string{},
 	Title:       "Marvel Characters API",
-	Description: "This API serves as a gateway to fetch character data from Marvel's API.",
+	Description: "This API serves as a gateway for fetching character data from Marvel's API.",
 }
 
 type s struct{}
