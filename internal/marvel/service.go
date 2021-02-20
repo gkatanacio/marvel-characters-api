@@ -12,16 +12,14 @@ type Servicer interface {
 	ReloadCache() error
 }
 
-// Service is the concrete implementation of Servicer. It keeps track of
-// the timestamp of the latest modified character, along with a cache to
+// Service is the concrete implementation of Servicer. It uses a cache to
 // reduce calls to Marvel's API.
 type Service struct {
-	client         MarvelDataFetcher
-	cache          Cache
-	latestModified *time.Time
+	client MarvelDataFetcher
+	cache  CharacterCache
 }
 
-func NewService(client MarvelDataFetcher, cache Cache) *Service {
+func NewService(client MarvelDataFetcher, cache CharacterCache) *Service {
 	return &Service{
 		client: client,
 		cache:  cache,
@@ -30,27 +28,31 @@ func NewService(client MarvelDataFetcher, cache Cache) *Service {
 
 // GetAllCharacterIds returns the character IDs of all Marvel characters.
 func (s *Service) GetAllCharacterIds() ([]int, error) {
-	characters, err := s.client.GetAllCharacters(s.latestModified)
+	cachedCharIds, cachedLatestModified := s.cache.GetCharacterIds()
+
+	var latestModified *time.Time
+	if !cachedLatestModified.IsZero() {
+		latestModified = &cachedLatestModified
+	}
+
+	characters, err := s.client.GetAllCharacters(latestModified)
 	if err != nil {
 		return nil, err
 	}
 
-	cachedCharIds := s.cache.GetCharacterIds()
-
 	if len(characters) > 0 {
 		// s.client.GetAllCharacters() already returns the latest modified character as the first element
 		// if we really want to be safe, we can add a simple logic here to get the most recent `Modified`
-		latestModified, err := time.Parse(dateFormatMarvelApi, characters[0].Modified)
+		newLatestModified, err := time.Parse(dateFormatMarvelApi, characters[0].Modified)
 		if err != nil {
 			return nil, err
 		}
-		s.latestModified = &latestModified
 
 		for _, c := range characters {
 			cachedCharIds.Add(c.Id)
 		}
 
-		s.cache.SetCharacterIds(cachedCharIds)
+		s.cache.SetCharacterIds(cachedCharIds, newLatestModified)
 	}
 
 	return cachedCharIds.ToSlice(), nil
@@ -71,7 +73,7 @@ func (s *Service) GetCharacter(id int) (*Character, error) {
 }
 
 // ReloadCache fetches all character IDs from Marvel's API and stores
-// them in a cache.
+// them in a cache, along with the latest modified time.
 func (s *Service) ReloadCache() error {
 	characters, err := s.client.GetAllCharacters(nil)
 	if err != nil {
@@ -88,13 +90,12 @@ func (s *Service) ReloadCache() error {
 	if err != nil {
 		return err
 	}
-	s.latestModified = &latestModified
 
 	charIds := NewIntSet()
 	for _, c := range characters {
 		charIds.Add(c.Id)
 	}
 
-	s.cache.SetCharacterIds(*charIds)
+	s.cache.SetCharacterIds(*charIds, latestModified)
 	return nil
 }

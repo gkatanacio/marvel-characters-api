@@ -42,17 +42,17 @@ func Test_Service_GetAllCharacterIds_NewCharsFetched(t *testing.T) {
 
 func Test_Service_GetAllCharacterIds_NoCharsFetched(t *testing.T) {
 	// given
-	var latestModified *time.Time
+	latestModified := time.Now()
 
 	clientMock := new(mocks.MarvelDataFetcher)
-	clientMock.On("GetAllCharacters", latestModified).Return(nil, nil)
+	clientMock.On("GetAllCharacters", &latestModified).Return(nil, nil)
 
 	cachedIds := marvel.NewIntSet()
 	cachedIds.Add(1009351)
 	cachedIds.Add(1011490)
 	cachedIds.Add(1011001)
 	cache := marvel.NewInMemCache()
-	cache.SetCharacterIds(*cachedIds)
+	cache.SetCharacterIds(*cachedIds, latestModified)
 	service := marvel.NewService(clientMock, cache)
 
 	// when
