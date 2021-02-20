@@ -18,7 +18,7 @@ import (
 // MarvelDataFetcher is the interface to abstract the actual
 // calls to Marvel's API.
 type MarvelDataFetcher interface {
-	GetAllCharacters(from *time.Time) ([]*MarvelApiCharacterData, error)
+	GetAllCharacters(modifiedSince *time.Time) ([]*MarvelApiCharacterData, error)
 	GetCharacter(id int) (*MarvelApiCharacterData, error)
 }
 
@@ -38,10 +38,10 @@ func NewClient(cfg *Config) *Client {
 }
 
 // GetAllCharacters fetches all characters modified since the optionally
-// provided `from` timestamp. If `from` is nil, GetAllCharacters fetches all
+// provided `modifiedSince` timestamp. If `modifiedSince` is nil, GetAllCharacters fetches all
 // the Marvel characters. The MarvelApiCharacterData with the most recent
 // MarvelApiCharacterData.Modified is set as the first element in the returned slice.
-func (c *Client) GetAllCharacters(from *time.Time) ([]*MarvelApiCharacterData, error) {
+func (c *Client) GetAllCharacters(modifiedSince *time.Time) ([]*MarvelApiCharacterData, error) {
 	var characters []*MarvelApiCharacterData
 
 	batchSize := 100
@@ -50,8 +50,8 @@ func (c *Client) GetAllCharacters(from *time.Time) ([]*MarvelApiCharacterData, e
 		"limit":   strconv.Itoa(batchSize),
 		"orderBy": "-modified",
 	}
-	if from != nil {
-		qp["modifiedSince"] = from.Format(dateFormatMarvelApi)
+	if modifiedSince != nil {
+		qp["modifiedSince"] = modifiedSince.Format(dateFormatMarvelApi)
 	}
 
 	marvelApiResp, err := c.httpGet("/v1/public/characters", qp)

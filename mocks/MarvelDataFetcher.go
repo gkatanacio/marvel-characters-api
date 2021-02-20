@@ -14,13 +14,13 @@ type MarvelDataFetcher struct {
 	mock.Mock
 }
 
-// GetAllCharacters provides a mock function with given fields: from
-func (_m *MarvelDataFetcher) GetAllCharacters(from *time.Time) ([]*marvel.MarvelApiCharacterData, error) {
-	ret := _m.Called(from)
+// GetAllCharacters provides a mock function with given fields: modifiedSince
+func (_m *MarvelDataFetcher) GetAllCharacters(modifiedSince *time.Time) ([]*marvel.MarvelApiCharacterData, error) {
+	ret := _m.Called(modifiedSince)
 
 	var r0 []*marvel.MarvelApiCharacterData
 	if rf, ok := ret.Get(0).(func(*time.Time) []*marvel.MarvelApiCharacterData); ok {
-		r0 = rf(from)
+		r0 = rf(modifiedSince)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).([]*marvel.MarvelApiCharacterData)
@@ -29,7 +29,7 @@ func (_m *MarvelDataFetcher) GetAllCharacters(from *time.Time) ([]*marvel.Marvel
 
 	var r1 error
 	if rf, ok := ret.Get(1).(func(*time.Time) error); ok {
-		r1 = rf(from)
+		r1 = rf(modifiedSince)
 	} else {
 		r1 = ret.Error(1)
 	}
