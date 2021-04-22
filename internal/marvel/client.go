@@ -32,7 +32,7 @@ func NewClient(cfg *Config) *Client {
 	return &Client{
 		cfg: cfg,
 		httpClient: &http.Client{
-			Timeout: time.Second * 10,
+			Timeout: time.Second * 15,
 		},
 	}
 }
