@@ -63,7 +63,6 @@ $ make genSwagger
 ```bash
 $ make .env
 # set correct values for the following in .env
-# MARVEL_API_BASE_URL
 # MARVEL_API_KEY_PUBLIC
 # MARVEL_API_KEY_PRIVATE
 $ make start
